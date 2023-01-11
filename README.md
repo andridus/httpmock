@@ -1,4 +1,4 @@
-# Httpmock
+# HTTPMock
 
 ## Installation
 
