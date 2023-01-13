@@ -59,16 +59,22 @@ defmodule HTTPMock do
         quote do
           def match_route(unquote(method), unquote(list_url), opts) do
             body_params = opts[:body_params] || %{}
+            query_params = opts[:query_params] || %{}
 
             method = unquote(method)
             url = unquote(list_url_formated) |> Enum.join("/")
             path_params = unquote(params) |> Map.new()
-            params = Map.merge(body_params, path_params)
+
+            params =
+              body_params
+              |> Map.merge(query_params)
+              |> Map.merge(path_params)
 
             conn = %{
               url: url,
               body_params: body_params,
               path_params: path_params,
+              query_params: query_params,
               method: method
             }
 
@@ -98,13 +104,23 @@ defmodule HTTPMock do
       unquote_splicing(defs)
       def match(_method, _url, _opts \\ [])
 
-      def match(method, url, opts) when is_binary(url) and is_atom(method),
-        do: match_route(method, String.split(url, "/"), opts)
+      def match(method, url, opts) when is_binary(url) and is_atom(method) do
+        {base, params} = HTTPMock.parse_url(url)
+        match_route(method, String.split(base, "/"), opts ++ [query_params: params])
+      end
 
       def match(method, url, _),
         do: raise("Route `#{String.upcase(to_string(method))} #{url}` not defined")
 
       unquote(behaviour)
+    end
+  end
+
+  def parse_url(url) do
+    String.split(url, "?")
+    |> case do
+      [base, params] -> {base, URI.decode_query(params)}
+      _ -> {url, %{}}
     end
   end
 

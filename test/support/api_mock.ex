@@ -6,8 +6,16 @@ defmodule HTTPMock.APIMockTest do
 
   @url "https://jsonplaceholder.typicode.com"
   endpoint @url do
+    get("/todos", __MODULE__, :get_todos)
     get("/todos/:id", __MODULE__, :get_todo)
     get("/users/:id", __MODULE__, :get_user)
+  end
+
+  def get_todos(_conn, %{"limit" => _}) do
+    data =
+      ~s([{\n  \"userId\": 1,\n  \"id\": 1,\n  \"title\": \"delectus aut autem\",\n  \"completed\": false\n}])
+
+    {:ok, %{body: data, status_code: 200}}
   end
 
   def get_todo(_conn, %{"id" => id}) do

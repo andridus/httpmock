@@ -23,4 +23,11 @@ defmodule HttpmockTest do
               status_code: 200
             }} = HTTPoison.get("https://jsonplaceholder.typicode.com/users/1")
   end
+
+  test "match get with params" do
+    Mimic.stub_with(HTTPoison, HTTPMock.APIMockTest)
+
+    assert {:ok, %{status_code: 200}} =
+             HTTPoison.get("https://jsonplaceholder.typicode.com/todos?limit=1")
+  end
 end
