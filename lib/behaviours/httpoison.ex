@@ -42,6 +42,12 @@ defmodule HTTPMock.Behaviours.HTTPoison do
 
       def post!(url, headers \\ [], options \\ []),
         do: match(:post, url, headers: headers, options: options) |> unwrap()
+
+      def put(url, headers \\ [], options \\ []),
+        do: match(:put, url, headers: headers, options: options)
+
+      def put!(url, headers \\ [], options \\ []),
+        do: match(:put, url, headers: headers, options: options) |> unwrap()
     end
   end
 end
