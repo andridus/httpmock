@@ -30,4 +30,18 @@ defmodule HttpmockTest do
     assert {:ok, %{status_code: 200}} =
              HTTPoison.get("https://jsonplaceholder.typicode.com/todos?limit=1")
   end
+
+  test "match post with params" do
+    Mimic.stub_with(HTTPoison, HTTPMock.APIMockTest)
+
+    assert {:ok, %{body: "{\"data\":\"user\"}", status_code: 200}} =
+             HTTPoison.post("https://jsonplaceholder.typicode.com/users", ~s({"data": "user"}))
+  end
+
+  test "match put with params" do
+    Mimic.stub_with(HTTPoison, HTTPMock.APIMockTest)
+
+    assert {:ok, %{body: "{\"data\":\"user\"}", status_code: 200}} =
+             HTTPoison.put("https://jsonplaceholder.typicode.com/users", ~s({"data": "user"}))
+  end
 end
