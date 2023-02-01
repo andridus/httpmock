@@ -29,21 +29,21 @@ defmodule HttpmockTest do
       Mimic.stub_with(HTTPoison, HTTPMock.APIMockTest)
 
       assert {:ok, %{status_code: 200}} =
-              HTTPoison.get("https://jsonplaceholder.typicode.com/todos?limit=1")
+               HTTPoison.get("https://jsonplaceholder.typicode.com/todos?limit=1")
     end
 
     test "match post with params" do
       Mimic.stub_with(HTTPoison, HTTPMock.APIMockTest)
 
       assert {:ok, %{body: "{\"data\":\"user\"}", status_code: 200}} =
-              HTTPoison.post("https://jsonplaceholder.typicode.com/users", ~s({"data": "user"}))
+               HTTPoison.post("https://jsonplaceholder.typicode.com/users", ~s({"data": "user"}))
     end
 
     test "match put with params" do
       Mimic.stub_with(HTTPoison, HTTPMock.APIMockTest)
 
       assert {:ok, %{body: "{\"data\":\"user\"}", status_code: 200}} =
-              HTTPoison.put("https://jsonplaceholder.typicode.com/users", ~s({"data": "user"}))
+               HTTPoison.put("https://jsonplaceholder.typicode.com/users", ~s({"data": "user"}))
     end
   end
 
@@ -51,9 +51,9 @@ defmodule HttpmockTest do
     setup do
       {:ok, _pid} = HTTPMock.StateMockTest.start_link()
 
-
       :ok
     end
+
     test "Testing state" do
       assert [{1, "fulano"}] = HTTPMock.StateMockTest.all(:users)
       assert [%{id: 1, type: "human"}] = HTTPMock.StateMockTest.all(:profiles)
@@ -64,12 +64,14 @@ defmodule HttpmockTest do
       assert {1, "de Tal"} = HTTPMock.StateMockTest.one(:users, 1)
       assert :ok = HTTPMock.StateMockTest.create(:users, {2, "Sicrano"})
       assert {1, "de Tal"} = HTTPMock.StateMockTest.one(:users, 1)
+      assert :ok = HTTPMock.StateMockTest.delete(:users, 1)
     end
+
     test "match get user" do
       Mimic.stub_with(HTTPoison, HTTPMock.APIMockTest)
 
       assert {:ok, %{body: body, status_code: 200}} =
-              HTTPoison.get("https://jsonplaceholder.typicode.com/profiles/mock/1")
+               HTTPoison.get("https://jsonplaceholder.typicode.com/profiles/mock/1")
 
       assert %{id: 1, type: "human"} = body
     end
@@ -78,10 +80,12 @@ defmodule HttpmockTest do
       Mimic.stub_with(HTTPoison, HTTPMock.APIMockTest)
 
       data = %{file: "nofile"} |> JSON.encode!()
-      assert {:ok, %{body: %{:id => 1, :type => "human", "file" => "nofile", "id" => "1"}, status_code: 200}} =
-              HTTPoison.put("https://jsonplaceholder.typicode.com/profiles/mock/1", data)
+
+      assert {:ok,
+              %{
+                body: %{:id => 1, :type => "human", "file" => "nofile", "id" => "1"},
+                status_code: 200
+              }} = HTTPoison.put("https://jsonplaceholder.typicode.com/profiles/mock/1", data)
     end
   end
-
-
 end

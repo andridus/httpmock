@@ -104,6 +104,7 @@ defmodule HTTPMock do
       unquote_splicing(defs)
 
       def match(_method, _url, _opts \\ [])
+
       def match(method, url, opts) when is_binary(url) and is_atom(method) do
         {base, params} = HTTPMock.parse_url(url)
         match_route(method, String.split(base, "/"), opts ++ [query_params: params])
@@ -188,9 +189,10 @@ defmodule HTTPMock do
   def maybe_decode(body) when is_binary(body) do
     JSON.decode(body)
     |> case do
-      {:ok, body} ->  body
+      {:ok, body} -> body
       _ -> %{}
     end
   end
+
   def maybe_decode(body) when is_map(body), do: body
 end
