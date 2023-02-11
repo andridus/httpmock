@@ -13,6 +13,10 @@ defmodule HTTPMock.State do
         {:ok, state}
       end
 
+      def handle_call("all", _, state) do
+        {:reply, state, state}
+      end
+
       def handle_call("all:" <> entity, _, state) do
         entity = String.to_existing_atom(entity)
         {_, entity_state} = List.keyfind(state, entity, 0, {entity, [state: []]})
@@ -153,6 +157,10 @@ defmodule HTTPMock.State do
       end
 
       # PUBLIC API
+      def all do
+        GenServer.call(__MODULE__, "all")
+      end
+
       def all(entity) do
         GenServer.call(__MODULE__, "all:#{entity}")
       end
@@ -172,6 +180,7 @@ defmodule HTTPMock.State do
       def update(entity, id, params) do
         GenServer.call(__MODULE__, {"update:#{entity}", id, params})
       end
+
       def reset() do
         GenServer.call(__MODULE__, "reset")
       end

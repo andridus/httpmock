@@ -1,5 +1,5 @@
 defmodule HTTPMock.State.Supervisor do
-    def start_link(children) do
+  def start_link(children) do
     Supervisor.start_link(__MODULE__, children, [])
   end
 
