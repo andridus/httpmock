@@ -21,7 +21,7 @@ defmodule HTTPMock.State do
         entity = String.to_existing_atom(entity)
         {_, entity_state} = List.keyfind(state, entity, 0, {entity, [state: []]})
 
-        {:reply, entity_state[:default], state}
+        {:reply, entity_state[:state], state}
       end
 
       def handle_call({"one:" <> entity, id}, _, state) do
