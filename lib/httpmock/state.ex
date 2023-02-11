@@ -180,7 +180,7 @@ defmodule HTTPMock.State do
     entities = Module.get_attribute(env.module, :entities) || []
 
     quote do
-      def start_link do
+      def start_link(_ \\ []) do
         state = unquote(entities)
         GenServer.start_link(__MODULE__, state, name: __MODULE__)
       end
