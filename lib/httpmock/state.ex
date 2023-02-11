@@ -172,6 +172,9 @@ defmodule HTTPMock.State do
       def update(entity, id, params) do
         GenServer.call(__MODULE__, {"update:#{entity}", id, params})
       end
+      def reset() do
+        GenServer.call(__MODULE__, "reset")
+      end
     end
   end
 
@@ -183,6 +186,11 @@ defmodule HTTPMock.State do
       def start_link(_ \\ []) do
         state = unquote(entities)
         GenServer.start_link(__MODULE__, state, name: __MODULE__)
+      end
+
+      def handle_call("reset", _, _state) do
+        state = unquote(entities)
+        {:reply, :ok, state}
       end
     end
   end
