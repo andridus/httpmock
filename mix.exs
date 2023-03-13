@@ -4,7 +4,7 @@ defmodule HTTPMock.MixProject do
   def project do
     [
       app: :httpmock,
-      version: "0.1.0",
+      version: "0.1.1",
       name: "HTTPMock",
       elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
