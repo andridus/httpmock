@@ -50,6 +50,30 @@ defmodule HTTPMock.Behaviours.HTTPoison do
         do:
           match(:put, url, headers: headers, options: options, body_params: body)
           |> unwrap()
+
+      def request(request),
+        do: raise("Todo `request/1`")
+
+      def request!(request),
+        do: raise("Todo `request!/1`")
+
+      def request(method, url), do: match(method, url, [])
+      def request(method, url, body), do: match(method, url, body_params: body)
+
+      def request(method, url, body, headers),
+        do: match(method, url, body_params: body, headers: headers)
+
+      def request(method, url, body, headers, options),
+        do: match(method, url, body_params: body, headers: headers, options: options)
+
+      def request!(method, url), do: match(method, url, []) |> unwrap()
+      def request!(method, url, body), do: match(method, url, body_params: body) |> unwrap()
+
+      def request!(method, url, body, headers),
+        do: match(method, url, body_params: body, headers: headers) |> unwrap()
+
+      def request!(method, url, body, headers, options),
+        do: match(method, url, body_params: body, headers: headers, options: options) |> unwrap()
     end
   end
 end

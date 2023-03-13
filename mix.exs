@@ -15,14 +15,16 @@ defmodule HTTPMock.MixProject do
       source_url: "https://github.com/andridus/httpmock"
     ]
   end
+
   defp description() do
     "HTTP mocking for Elixir"
   end
+
   defp package() do
     [
       name: "httpmock",
       # These are the default files included in the package
-      files: ~w(lib priv .formatter.exs mix.exs README* LICENSE* CHANGELOG*),
+      files: ~w(lib .formatter.exs mix.exs README* LICENSE* CHANGELOG*),
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => "https://github.com/andridus/httpmock"}
     ]
