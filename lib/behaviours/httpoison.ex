@@ -52,10 +52,21 @@ defmodule HTTPMock.Behaviours.HTTPoison do
           |> unwrap()
 
       def request(request),
-        do: raise("Todo `request/1`")
+        do:
+          match(request.method, request.url,
+            body_params: request.body,
+            headers: request.headers,
+            options: request.options
+          )
 
       def request!(request),
-        do: raise("Todo `request!/1`")
+        do:
+          match(request.method, request.url,
+            body_params: request.body,
+            headers: request.headers,
+            options: request.options
+          )
+          |> unwrap()
 
       def request(method, url), do: match(method, url, [])
       def request(method, url, body), do: match(method, url, body_params: body)
