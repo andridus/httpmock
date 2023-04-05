@@ -36,7 +36,7 @@ defmodule HTTPMock.APIMockTest do
     {:ok, %{body: data, status_code: 200}}
   end
 
-  def get_profile_mock(_conn, %{"id" => id} = params) do
+  def get_profile_mock(_conn, %{"id" => id} = _params) do
     data = HTTPMock.StateMockTest.one(:profiles, String.to_integer(id))
 
     {:ok, %{body: data, status_code: 200}}

@@ -72,6 +72,8 @@ defmodule HTTPMock do
 
             conn = %{
               url: url,
+              req_headers: opts[:headers],
+              req_options: opts[:options],
               body_params: body_params,
               path_params: path_params,
               query_params: query_params,
