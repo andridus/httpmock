@@ -90,7 +90,7 @@ defmodule HTTPMock.State do
 
             is_atom(key) or is_binary(key) ->
               {:ok,
-               Enum.map(
+               Enum.filter(
                  entity_state[:state],
                  fn row when is_map(row) ->
                    row[key] != id
