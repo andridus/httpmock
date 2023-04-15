@@ -31,11 +31,11 @@ defmodule HTTPMock.Behaviours.HTTPoison do
       def options!(url, headers \\ [], options \\ []),
         do: match(:options, url, headers: headers, options: options) |> unwrap()
 
-      def patch(url, headers \\ [], options \\ []),
-        do: match(:patch, url, headers: headers, options: options)
+      def patch(url, body, headers \\ [], options \\ []),
+        do: match(:patch, url, headers: headers, options: options, body_params: body)
 
-      def patch!(url, headers \\ [], options \\ []),
-        do: match(:patch, url, headers: headers, options: options) |> unwrap()
+      def patch!(url, body, headers \\ [], options \\ []),
+        do: match(:patch, url, headers: headers, options: options, body_params: body) |> unwrap()
 
       def post(url, body, headers \\ [], options \\ []),
         do: match(:post, url, headers: headers, options: options, body_params: body)
